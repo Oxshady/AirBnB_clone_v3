@@ -78,6 +78,8 @@ class DBStorage:
     def get(self, cls, id):
         """return obj based on id"""
         if cls is not None and id is not None:
+            if isinstance(cls, str):
+                cls = eval(cls)
             if cls in classes.values():
                 return self.__session.query(cls).get(id)
         return None

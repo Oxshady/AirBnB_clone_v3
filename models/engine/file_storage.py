@@ -72,8 +72,16 @@ class FileStorage:
     def get(self, cls, id):
         """return obj based on id"""
         if cls is not None and id is not None:
-            if cls in classes.values():
-                cls = cls.__name__
+            data = None
+            flag = 0
+            if isinstance(cls, str):
+                data = classes.keys()
+            else:
+                data = classes.values()
+                flag = 1
+            if cls in data:
+                if flag:
+                    cls = cls.__name__
                 key = f"{cls}.{id}"
                 return self.all()[key]
         return None
