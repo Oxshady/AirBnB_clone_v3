@@ -62,7 +62,7 @@ def update_user(user_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if key not in ['id', 'email','created_at', 'updated_at']:
+        if key not in ['id', 'email', 'created_at', 'updated_at']:
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict()), 200
