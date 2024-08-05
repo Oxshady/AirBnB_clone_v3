@@ -11,8 +11,10 @@ from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 CORS(app=app, resources={r"/*": {'origins':'0.0.0.0'}})
+
 
 @app_views.errorhandler(werkzeug.exceptions.NotFound)
 def page_not_found(error):
