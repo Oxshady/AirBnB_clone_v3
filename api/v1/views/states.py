@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+state endpoint
+"""
 from api.v1.views import app_views
 from flask import request, jsonify, abort, request
 from models import storage
