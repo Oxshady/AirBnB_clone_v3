@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-cities endpoint
+places endpoint
 """
 from api.v1.views import app_views
 from flask import request, jsonify, abort
@@ -30,7 +30,9 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route("/places/<place_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+    "/places/<place_id>",
+    methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
     """delete specific place by city id endpoint"""
     place = storage.get(Place, place_id)
