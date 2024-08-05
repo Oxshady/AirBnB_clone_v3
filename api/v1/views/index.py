@@ -10,7 +10,7 @@ from models import storage
 classes = ["Amenity", "City", "Place", "Review", "State", "User"]
 
 
-@app_views.route("/status", methods=['GET'])
+@app_views.route("/status", methods=['GET'], strict_slashes=False)
 def status():
     """
     return json msg with key status
@@ -19,7 +19,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats", methods=['GET'])
+@app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def stats():
     """return number of all obbjects of all types"""
     dic = {}
