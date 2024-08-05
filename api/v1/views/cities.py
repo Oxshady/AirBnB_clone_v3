@@ -2,6 +2,7 @@
 from api.v1.views import app_views
 from flask import request, jsonify, abort, request
 from models import storage
+from models.state import State
 from models.city import City
 
 
@@ -18,9 +19,30 @@ def get_states():
         abort(404)
 
 
+@app_views.route(
+    "/states/<state_id>/cities",
+    methods=['GET'], strict_slashes=False
+    )
+def get_city_by_states(state_id):
+    """get all cities in states"""
+    data = []
+    try:
+        objs = storage.get(State, state_id)
+    except KeyError:
+        abort(404)
+    if objs is None:
+        abort(404)
+    for city in objs.cities:
+        data.append(city.to_dict)
+    if data:
+        return jsonify(data)
+    else:
+        abort(404)
+
+
 @app_views.route("/cities/<city_id>", methods=['GET'], strict_slashes=False)
 def get_state(city_id):
-    """git specific state by state id endpoint"""
+    """git specific city by city id endpoint"""
     try:
         obj = storage.get(City, city_id)
     except KeyError:
@@ -34,7 +56,7 @@ def get_state(city_id):
     strict_slashes=False
     )
 def delete_state(city_id):
-    """delete specific state by state id endpoint"""
+    """delete specific city by city id endpoint"""
     try:
         obj = storage.get(City, city_id)
     except KeyError:
@@ -46,7 +68,7 @@ def delete_state(city_id):
 
 @app_views.route("/cities", methods=['POST'], strict_slashes=False)
 def new_state():
-    """add new state endpoint"""
+    """add new city endpoint"""
     data = request.get_json()
     if data is None:
         abort(400, 'Not a JSON')
@@ -60,7 +82,7 @@ def new_state():
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_state(city_id):
-    """update state object"""
+    """update city object"""
     try:
         state = storage.get(City, city_id)
     except KeyError:
