@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-cities endpoint
+places endpoint
 """
 from api.v1.views import app_views
 from flask import request, jsonify, abort
