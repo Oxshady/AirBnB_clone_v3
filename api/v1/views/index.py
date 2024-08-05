@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 creating view from app_views bluprint
 that just return json msg with key status
