@@ -5,7 +5,7 @@ that just return json msg with key status
 and value OK
 """
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, abort
 from models import storage
 classes = ["Amenity", "City", "Place", "Review", "State", "User"]
 
@@ -25,4 +25,7 @@ def stats():
     dic = {}
     for cls in classes:
         dic[cls.lower()] = storage.count(cls)
-    return jsonify(dic)
+    if dic:
+        return jsonify(dic)
+    else:
+        abort(404)
