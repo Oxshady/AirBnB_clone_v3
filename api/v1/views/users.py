@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""users endpoint"""
+"""users endpoint that do crud operation"""
 
 from api.v1.views import app_views
 from flask import request, jsonify, abort
