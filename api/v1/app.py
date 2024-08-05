@@ -3,12 +3,25 @@
 controller that execute the app
 and assemble the components -> blueprints
 """
-from flask import Flask
+from flask import Flask, jsonify
+import werkzeug.exceptions
 from models import storage
+import werkzeug
 from api.v1.views import app_views
 from os import getenv
+
+
 app = Flask(__name__)
+
+
+@app_views.errorhandler(werkzeug.exceptions.NotFound)
+def page_not_found(error):
+    """handle error page"""
+    return jsonify({"error": "Not found"}), 404
+
+
 app.register_blueprint(app_views)
+app.register_error_handler(404, page_not_found)
 
 
 @app.teardown_appcontext
