@@ -44,7 +44,10 @@ def delete_amenity(amenity_id):
     strict_slashes=False)
 def create_amenity():
     """Add new amenity endpoint"""
-    data = request.get_json()
+    if request.content_type == "application/json":
+        data = request.get_json()
+    elif request.content_type == "application/x-www-form-urlencoded":
+        data = request.form
     if not data:
         abort(400, 'Not a JSON')
     if 'name' not in data:
