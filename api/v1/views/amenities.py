@@ -47,7 +47,7 @@ def create_amenity():
     if request.content_type == "application/json":
         data = request.get_json()
     else:
-        abort(400)
+        abort(400, 'Not a JSON')
     if not data:
         abort(400, 'Not a JSON')
     if 'name' not in data:
@@ -66,7 +66,10 @@ def update_amenity(amenity_id):
     obj = storage.get(Amenity, amenity_id)
     if obj is None:
         abort(404)
-    data = request.get_json()
+    if request.content_type == "application/json":
+        data = request.get_json()
+    else:
+        abort(400, 'Not a JSON')
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
