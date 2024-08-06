@@ -5,34 +5,32 @@ and assemble the components -> blueprints
 """
 from flask import Flask, jsonify
 import werkzeug.exceptions
-from models import storage
 import werkzeug
-from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS
 
 
 app = Flask(__name__)
-CORS(app=app, resources={r"/*": {'origins':'0.0.0.0'}})
-
-
-@app_views.errorhandler(werkzeug.exceptions.NotFound)
-def page_not_found(error):
-    """handle error page"""
-    return jsonify({"error": "Not found"}), 404
-
-
-app.register_blueprint(app_views)
-app.register_error_handler(404, page_not_found)
-
-
-@app.teardown_appcontext
-def teardown(exception=None):
-    """tear down that close the storage engine"""
-    storage.close()
+CORS(app=app, resources={r"/*": {'origins': '0.0.0.0'}})
 
 
 if __name__ == "__main__":
+    from api.v1.views import app_views
+
+    @app_views.errorhandler(werkzeug.exceptions.NotFound)
+    def page_not_found(error):
+        """handle error page"""
+        return jsonify({"error": "Not found"}), 404
+
+    app.register_blueprint(app_views)
+    app.register_error_handler(404, page_not_found)
+
+    @app.teardown_appcontext
+    def teardown(exception=None):
+        """tear down that close the storage engine"""
+        from models import storage
+        storage.close()
+
     host = getenv("HBNB_API_HOST")
     port = getenv("HBNB_API_PORT")
     if host is None:
