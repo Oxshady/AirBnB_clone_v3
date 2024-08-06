@@ -9,7 +9,7 @@ from flask import jsonify, abort
 from models import storage
 
 classes = {
-    "amenities": "amenity",
+    "amenities": "Amenity",
     "cities": "City",
     "places": "Place",
     "reviews": "Review",
