@@ -56,10 +56,13 @@ def delete_city(city_id):
     methods=['POST'], strict_slashes=False)
 def create_city(state_id):
     """add new city to a specific state endpoint"""
+    if request.content_type == "application/json":
+        data = request.get_json()
+    else:
+        abort(400, 'Not a JSON')
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
     if 'name' not in data:
@@ -74,10 +77,13 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
     """update city object"""
+    if request.content_type == "application/json":
+        data = request.get_json()
+    else:
+        abort(400, 'Not a JSON')
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
