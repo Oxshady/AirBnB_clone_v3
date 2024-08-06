@@ -83,7 +83,10 @@ class FileStorage:
                 if flag:
                     cls = cls.__name__
                 key = f"{cls}.{id}"
-                return self.all()[key]
+                try:
+                    return self.all()[key]
+                except KeyError:
+                    return None
         return None
 
     def count(self, cls=None):
