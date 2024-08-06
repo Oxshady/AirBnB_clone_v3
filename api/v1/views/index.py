@@ -7,7 +7,14 @@ and value OK
 from api.v1.views import app_views
 from flask import jsonify, abort
 from models import storage
-classes = ["Amenity", "City", "Place", "Review", "State", "User"]
+
+classes = {
+    "amenities": "amenity",
+    "cities": "City",
+    "places": "Place",
+    "reviews": "Review",
+    "states": "State",
+    "users": "User"}
 
 
 @app_views.route("/status", methods=['GET'], strict_slashes=False)
@@ -23,8 +30,8 @@ def status():
 def stats():
     """return number of all obbjects of all types"""
     dic = {}
-    for cls in classes:
-        dic[cls.lower()] = storage.count(cls)
+    for key, value in classes.items():
+        dic[key] = storage.count(value)
     if dic:
         return jsonify(dic)
     else:
