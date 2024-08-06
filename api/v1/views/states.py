@@ -18,7 +18,7 @@ def get_states():
     if data:
         return jsonify(data)
     else:
-        abort(404)
+        return []
 
 
 @app_views.route("/states/<state_id>", methods=['GET'], strict_slashes=False)
