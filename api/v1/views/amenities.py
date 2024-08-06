@@ -46,8 +46,8 @@ def create_amenity():
     """Add new amenity endpoint"""
     if request.content_type == "application/json":
         data = request.get_json()
-    elif request.content_type == "application/x-www-form-urlencoded":
-        data = request.form
+    else:
+        abort(400)
     if not data:
         abort(400, 'Not a JSON')
     if 'name' not in data:
