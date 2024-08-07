@@ -82,7 +82,7 @@ class FileStorage:
             if cls in data:
                 if flag:
                     cls = cls.__name__
-                key = f"{cls}.{id}"
+                key = "{}.{}".format(cls, id)
                 try:
                     return self.all()[key]
                 except KeyError:
